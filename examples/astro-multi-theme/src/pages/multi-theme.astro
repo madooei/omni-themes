@@ -1,0 +1,266 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { themes, applyThemeScriptString } from "../lib/theme-store";
+---
+
+<BaseLayout title="Multi-Theme Showcase - Omni-Themes">
+  <script set:html={applyThemeScriptString} is:inline slot="head" />
+  
+  <h1>🌈 Multi-Theme Showcase</h1>
+  
+  <p>
+    This page demonstrates the advanced multi-theme capabilities of omni-themes.
+    Unlike simple light/dark switching, you can create and use multiple custom color themes!
+  </p>
+
+  <div class="demo-section">
+    <h2>🎨 Available Themes</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+      {themes.map((theme) => (
+        <button 
+          class="theme-button" 
+          data-theme={theme}
+          style="padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; background: var(--header-bg); cursor: pointer; transition: all 0.2s ease;"
+        >
+          <h3 style="margin: 0 0 0.5rem 0; color: var(--accent-color);">
+            {theme.charAt(0).toUpperCase() + theme.slice(1)}
+          </h3>
+          <p style="margin: 0; font-size: 0.9em;">
+            {theme === 'light' && 'Clean, bright, and minimal'}
+            {theme === 'dark' && 'Easy on the eyes, perfect for night'}
+            {theme === 'blue' && 'Cool and professional'}
+            {theme === 'green' && 'Natural and calming'}
+            {theme === 'purple' && 'Creative and vibrant'}
+            {theme === 'system' && 'Follows your OS preference'}
+          </p>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🎛️ Quick Theme Switcher</h2>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      {themes.map((theme) => (
+        <button 
+          class="quick-theme-btn"
+          data-theme={theme}
+          style={`
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+          `}
+        >
+          {theme === 'system' ? '⚙️' : ''}
+          {theme === 'light' ? '☀️' : ''}
+          {theme === 'dark' ? '🌙' : ''}
+          {theme === 'blue' ? '🌊' : ''}
+          {theme === 'green' ? '🌿' : ''}
+          {theme === 'purple' ? '🔮' : ''}
+          {theme.charAt(0).toUpperCase() + theme.slice(1)}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>📊 Theme Analytics</h2>
+    <div class="theme-info">
+      <div class="theme-info-item">
+        <span class="theme-info-label">Current Selection:</span>
+        <code id="current-selection">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Active Theme:</span>
+        <code id="active-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Theme Family:</span>
+        <code id="theme-family">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Total Available:</span>
+        <code>{themes.length} themes</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🔄 Auto Theme Cycler</h2>
+    <p>Watch the themes automatically cycle through all available options:</p>
+    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <button id="start-cycle" type="button">▶️ Start Auto-Cycle</button>
+      <button id="stop-cycle" type="button" disabled>⏹️ Stop Auto-Cycle</button>
+      <span id="cycle-status" style="font-weight: bold;">Ready to start</span>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🌟 Advanced Features</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+      <div class="theme-info-item">
+        <h3>🎨 CSS Custom Properties</h3>
+        <p>Each theme uses CSS variables for seamless color transitions and easy customization.</p>
+      </div>
+      <div class="theme-info-item">
+        <h3>🔄 Real-time Updates</h3>
+        <p>Theme changes are instantly reflected across all UI elements without page refresh.</p>
+      </div>
+      <div class="theme-info-item">
+        <h3>💾 Persistent Storage</h3>
+        <p>Your theme choice is automatically saved and restored across browser sessions.</p>
+      </div>
+      <div class="theme-info-item">
+        <h3>🌐 Universal Compatibility</h3>
+        <p>Works in any JavaScript framework: React, Vue, Svelte, vanilla JS, and Astro!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>⚡ Performance Notes</h2>
+    <ul>
+      <li><strong>Zero runtime dependencies</strong> (except nanostores for now)</li>
+      <li><strong>Minimal bundle size</strong> - only the features you use</li>
+      <li><strong>No layout shift</strong> - themes apply before first paint</li>
+      <li><strong>Efficient updates</strong> - only changes what's necessary</li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<script>
+  import type { ThemeName } from "@madooei/omni-themes";
+  import { themes, $theme, $resolvedTheme, $systemTheme, setTheme } from "../lib/theme-store";
+
+  // DOM elements
+  const currentSelectionEl = document.getElementById("current-selection");
+  const activeThemeEl = document.getElementById("active-theme");
+  const themeFamilyEl = document.getElementById("theme-family");
+  const startCycleBtn = document.getElementById("start-cycle") as HTMLButtonElement;
+  const stopCycleBtn = document.getElementById("stop-cycle") as HTMLButtonElement;
+  const cycleStatusEl = document.getElementById("cycle-status");
+
+  let cycleInterval: NodeJS.Timeout | null = null;
+  let currentCycleIndex = 0;
+
+  // Theme family mapping
+  const themeFamilies: Record<string, string> = {
+    light: "Light family",
+    dark: "Dark family", 
+    blue: "Light family",
+    green: "Light family",
+    purple: "Light family",
+    system: "System preference"
+  };
+
+  // Update theme information
+  function updateThemeInfo() {
+    const currentTheme = $theme.get();
+    const resolvedTheme = $resolvedTheme.get();
+    const systemTheme = $systemTheme.get();
+
+    if (currentSelectionEl) currentSelectionEl.textContent = currentTheme;
+    if (activeThemeEl) activeThemeEl.textContent = resolvedTheme;
+    if (themeFamilyEl) themeFamilyEl.textContent = themeFamilies[resolvedTheme] || "Unknown";
+
+    // Update button states
+    document.querySelectorAll('.theme-button, .quick-theme-btn').forEach(btn => {
+      const button = btn as HTMLElement;
+      const themeValue = button.dataset.theme;
+      if (themeValue === currentTheme) {
+        button.style.borderColor = 'var(--accent-color)';
+        button.style.background = 'var(--accent-color)';
+        button.style.color = 'white';
+      } else {
+        button.style.borderColor = 'var(--border-color)';
+        button.style.background = 'var(--header-bg)';
+        button.style.color = 'var(--text-color)';
+      }
+    });
+  }
+
+  // Handle theme button clicks
+  function handleThemeClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const button = target.closest('[data-theme]') as HTMLElement;
+    if (button && button.dataset.theme) {
+      setTheme(button.dataset.theme as ThemeName);
+    }
+  }
+
+  // Auto-cycle functionality
+  function startAutoCycle() {
+    if (cycleInterval) return;
+    
+    const nonSystemThemes = themes.filter(t => t !== 'system');
+    currentCycleIndex = 0;
+    
+    cycleInterval = setInterval(() => {
+      setTheme(nonSystemThemes[currentCycleIndex] as ThemeName);
+      currentCycleIndex = (currentCycleIndex + 1) % nonSystemThemes.length;
+      
+      if (cycleStatusEl) {
+        cycleStatusEl.textContent = `Cycling... (${currentCycleIndex + 1}/${nonSystemThemes.length})`;
+      }
+    }, 2000);
+
+    if (startCycleBtn) startCycleBtn.disabled = true;
+    if (stopCycleBtn) stopCycleBtn.disabled = false;
+    if (cycleStatusEl) cycleStatusEl.textContent = "Auto-cycling active";
+  }
+
+  function stopAutoCycle() {
+    if (cycleInterval) {
+      clearInterval(cycleInterval);
+      cycleInterval = null;
+    }
+    
+    if (startCycleBtn) startCycleBtn.disabled = false;
+    if (stopCycleBtn) stopCycleBtn.disabled = true;
+    if (cycleStatusEl) cycleStatusEl.textContent = "Auto-cycling stopped";
+  }
+
+  // Event listeners
+  document.querySelectorAll('.theme-button, .quick-theme-btn').forEach(btn => {
+    btn.addEventListener('click', handleThemeClick);
+  });
+
+  if (startCycleBtn) startCycleBtn.addEventListener('click', startAutoCycle);
+  if (stopCycleBtn) stopCycleBtn.addEventListener('click', stopAutoCycle);
+
+  // Listen for theme changes
+  $theme.listen(updateThemeInfo);
+  $resolvedTheme.listen(updateThemeInfo);
+  $systemTheme.listen(updateThemeInfo);
+
+  // Initial update
+  updateThemeInfo();
+
+  // Add hover effects
+  document.querySelectorAll('.theme-button').forEach(btn => {
+    const button = btn as HTMLElement;
+    button.addEventListener('mouseenter', () => {
+      if (button.dataset.theme !== $theme.get()) {
+        button.style.transform = 'translateY(-2px)';
+        button.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+      }
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      button.style.transform = 'translateY(0)';
+      button.style.boxShadow = 'none';
+    });
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    if (cycleInterval) {
+      clearInterval(cycleInterval);
+    }
+  });
+</script>

@@ -1,0 +1,151 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { createForcedThemeScriptString, $theme, $systemTheme, $resolvedTheme } from "../lib/theme-store";
+
+// This page is forced to use the purple theme
+const forcedTheme = "purple";
+const forcedScriptString = createForcedThemeScriptString(forcedTheme);
+---
+
+<BaseLayout title="Forced Theme Demo - Omni-Themes">
+  <script set:html={forcedScriptString} is:inline slot="head" />
+  
+  <h1>🔒 Forced Theme Demo</h1>
+  
+  <div style="background: var(--accent-color); color: white; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+    <h2 style="margin: 0; color: white;">⚠️ This page is locked to the <strong>{forcedTheme}</strong> theme!</h2>
+  </div>
+  
+  <p>
+    This page demonstrates the "forced theme" capability of omni-themes. 
+    No matter what your system preference is or what theme you've selected elsewhere,
+    this page will always display in the <strong>{forcedTheme}</strong> theme.
+  </p>
+
+  <div class="demo-section">
+    <h2>🧪 Test the Forced Theme</h2>
+    <p>Try these actions and notice that this page stays in <strong>{forcedTheme}</strong> mode:</p>
+    <ol>
+      <li>Change your system's dark/light mode setting</li>
+      <li>Go to the <a href="/selector" target="_blank">Theme Selector page</a> and change the theme</li>
+      <li>Manually set localStorage in the browser console</li>
+      <li>Refresh this page</li>
+    </ol>
+    <p>
+      <strong>Result:</strong> This page remains locked to the {forcedTheme} theme regardless of any other settings!
+    </p>
+  </div>
+
+  <div class="demo-section">
+    <h2>📊 Theme Status Comparison</h2>
+    <p>Here you can see the difference between the global theme settings and this page's forced theme:</p>
+    
+    <div class="theme-info">
+      <div class="theme-info-item">
+        <span class="theme-info-label">Global Site Theme:</span>
+        <code id="site-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">System Preference:</span>
+        <code id="system-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Global Resolved Theme:</span>
+        <code id="global-resolved-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item" style="border: 2px solid var(--accent-color);">
+        <span class="theme-info-label">This Page's Forced Theme:</span>
+        <code style="color: var(--accent-color); font-weight: bold;">{forcedTheme}</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🔗 Compare with Other Pages</h2>
+    <p>Open these links in new tabs to see the contrast:</p>
+    <ul>
+      <li><a href="/" target="_blank">Home page (respects global theme)</a></li>
+      <li><a href="/selector" target="_blank">Theme selector (respects global theme)</a></li>
+      <li><a href="/basic" target="_blank">Basic demo (respects global theme)</a></li>
+    </ul>
+  </div>
+
+  <div class="demo-section">
+    <h2>💻 Implementation Details</h2>
+    <p>Forced themes are implemented using:</p>
+    <pre style="background: var(--bg-color); padding: 1rem; border-radius: 0.25rem; overflow-x: auto; font-size: 0.9em;"><code>---
+import { createForcedThemeScriptString } from "@madooei/omni-themes";
+
+const forcedTheme = "purple";
+const forcedScriptString = createForcedThemeScriptString(forcedTheme);
+---
+
+&lt;script set:html={forcedScriptString} is:inline slot="head" /&gt;</code></pre>
+    
+    <h3>Key Features:</h3>
+    <ul>
+      <li><strong>Override Protection:</strong> Forced themes cannot be overridden by user actions</li>
+      <li><strong>No Flash Loading:</strong> Theme is applied immediately on page load</li>
+      <li><strong>Selective Application:</strong> Only affects the specific page, not the entire site</li>
+      <li><strong>Accessibility:</strong> Still respects CSS custom properties for consistent styling</li>
+    </ul>
+  </div>
+
+  <div class="demo-section">
+    <h2>🎨 Use Cases for Forced Themes</h2>
+    <ul>
+      <li><strong>Landing Pages:</strong> Maintain specific branding regardless of user preferences</li>
+      <li><strong>Print Styles:</strong> Force light theme for better printing</li>
+      <li><strong>Demos:</strong> Showcase specific themes in documentation</li>
+      <li><strong>Special Events:</strong> Holiday or promotional themed pages</li>
+      <li><strong>Accessibility:</strong> High contrast themes for specific content</li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<script>
+  import { $theme, $systemTheme, $resolvedTheme } from "../lib/theme-store";
+
+  // Update the theme information display
+  function updateThemeInfo() {
+    const siteThemeEl = document.getElementById("site-theme");
+    const systemThemeEl = document.getElementById("system-theme");
+    const globalResolvedThemeEl = document.getElementById("global-resolved-theme");
+
+    if (siteThemeEl) {
+      siteThemeEl.textContent = $theme.get();
+    }
+    if (systemThemeEl) {
+      systemThemeEl.textContent = $systemTheme.get() || "unknown";
+    }
+    if (globalResolvedThemeEl) {
+      globalResolvedThemeEl.textContent = $resolvedTheme.get();
+    }
+  }
+
+  // Listen for changes in the global theme stores
+  $theme.listen(updateThemeInfo);
+  $systemTheme.listen(updateThemeInfo);
+  $resolvedTheme.listen(updateThemeInfo);
+
+  // Initial update
+  updateThemeInfo();
+
+  // Add a visual indicator showing this page is forced
+  const indicator = document.createElement("div");
+  indicator.innerHTML = "🔒 FORCED THEME ACTIVE";
+  indicator.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  `;
+  document.body.appendChild(indicator);
+</script>

@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { applyThemeScriptString } from "../lib/theme-store";
+---
+
+<BaseLayout title="Basic Theme Demo - Omni-Themes">
+  <script set:html={applyThemeScriptString} is:inline slot="head" />
+  
+  <h1>🌓 Basic Theme Demo</h1>
+  
+  <p>
+    This page demonstrates the most basic functionality of omni-themes: 
+    automatic light/dark theme switching based on system preferences.
+  </p>
+
+  <div class="demo-section">
+    <h2>🔍 How It Works</h2>
+    <p>
+      The theme automatically detects your system's color scheme preference using 
+      <code>prefers-color-scheme</code> media query. No JavaScript interaction required!
+    </p>
+    
+    <h3>Try this:</h3>
+    <ol>
+      <li>Change your system's dark/light mode setting</li>
+      <li>Watch the page theme update automatically</li>
+      <li>Refresh the page - no flash of incorrect theme!</li>
+    </ol>
+  </div>
+
+  <div class="demo-section">
+    <h2>💾 LocalStorage Integration</h2>
+    <p>
+      You can also manually override the theme by setting localStorage. Open your browser's 
+      developer console and try:
+    </p>
+    <pre style="background: var(--bg-color); padding: 1rem; border-radius: 0.25rem; overflow-x: auto;"><code>// Set dark theme
+localStorage.setItem('omni-theme-astro-demo', 'dark');
+
+// Set light theme  
+localStorage.setItem('omni-theme-astro-demo', 'light');
+
+// Use system preference
+localStorage.setItem('omni-theme-astro-demo', 'system');</code></pre>
+  </div>
+
+  <div class="demo-section">
+    <h2>📊 Current Theme Information</h2>
+    <div class="theme-info">
+      <div class="theme-info-item">
+        <span class="theme-info-label">Selected Theme:</span>
+        <code id="current-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">System Theme:</span>
+        <code id="system-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Resolved Theme:</span>
+        <code id="resolved-theme">Loading...</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🔗 Cross-Tab Synchronization</h2>
+    <p>
+      Open this page in multiple browser tabs, then change the theme in one tab 
+      using localStorage commands above. Watch all tabs update automatically!
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { $theme, $systemTheme, $resolvedTheme } from "../lib/theme-store";
+
+  // Update UI elements with current theme info
+  function updateThemeInfo() {
+    const currentThemeEl = document.getElementById("current-theme");
+    const systemThemeEl = document.getElementById("system-theme");
+    const resolvedThemeEl = document.getElementById("resolved-theme");
+
+    if (currentThemeEl) currentThemeEl.textContent = $theme.get();
+    if (systemThemeEl) systemThemeEl.textContent = $systemTheme.get() || "unknown";
+    if (resolvedThemeEl) resolvedThemeEl.textContent = $resolvedTheme.get();
+  }
+
+  // Listen for theme changes and update the display
+  $theme.listen(updateThemeInfo);
+  $systemTheme.listen(updateThemeInfo);
+  $resolvedTheme.listen(updateThemeInfo);
+
+  // Initial update
+  updateThemeInfo();
+</script>

@@ -1,0 +1,225 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Omni-Themes Astro Demo" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/basic">Basic</a></li>
+          <li><a href="/selector">Theme Selector</a></li>
+          <li><a href="/forced">Forced Theme</a></li>
+          <li><a href="/multi-theme">Multi-Theme</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* CSS Custom Properties for theming */
+  :root {
+    --bg-color: white;
+    --text-color: black;
+    --accent-color: #2563eb;
+    --border-color: #e5e7eb;
+    --header-bg: #f8fafc;
+  }
+
+  /* Dark theme */
+  [data-theme="dark"] {
+    --bg-color: #0f172a;
+    --text-color: white;
+    --accent-color: #60a5fa;
+    --border-color: #334155;
+    --header-bg: #1e293b;
+  }
+
+  /* Blue theme */
+  [data-theme="blue"] {
+    --bg-color: #dbeafe;
+    --text-color: #1e40af;
+    --accent-color: #3b82f6;
+    --border-color: #93c5fd;
+    --header-bg: #bfdbfe;
+  }
+
+  /* Green theme */
+  [data-theme="green"] {
+    --bg-color: #dcfce7;
+    --text-color: #166534;
+    --accent-color: #22c55e;
+    --border-color: #86efac;
+    --header-bg: #bbf7d0;
+  }
+
+  /* Purple theme */
+  [data-theme="purple"] {
+    --bg-color: #f3e8ff;
+    --text-color: #7c3aed;
+    --accent-color: #8b5cf6;
+    --border-color: #c4b5fd;
+    --header-bg: #ddd6fe;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: system-ui, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease;
+  }
+
+  nav a:hover {
+    background-color: var(--accent-color);
+    color: white;
+  }
+
+  main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1, h2, h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  code {
+    background-color: var(--border-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+  }
+
+  button, select {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.2s ease;
+  }
+
+  button:hover, select:hover {
+    opacity: 0.8;
+  }
+
+  select {
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+  }
+
+  .demo-section {
+    background-color: var(--header-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    margin: 1rem 0;
+  }
+
+  .theme-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .theme-info-item {
+    background-color: var(--bg-color);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--border-color);
+  }
+
+  .theme-info-label {
+    font-weight: bold;
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .example-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .example-link {
+    text-decoration: none;
+    color: var(--accent-color);
+  }
+
+  .example-link:hover {
+    color: var(--text-color);
+  }
+
+  .code-block {
+    background: var(--header-bg);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+  }
+
+  .code-block-small {
+    font-size: 0.9em;
+  }
+</style>

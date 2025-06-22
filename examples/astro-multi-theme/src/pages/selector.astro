@@ -1,0 +1,186 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { themes, applyThemeScriptString } from "../lib/theme-store";
+---
+
+<BaseLayout title="Theme Selector Demo - Omni-Themes">
+  <script set:html={applyThemeScriptString} is:inline slot="head" />
+  
+  <h1>🎨 Interactive Theme Selector</h1>
+  
+  <p>
+    This page demonstrates interactive theme switching with a UI selector.
+    Choose from multiple themes and see the changes applied instantly!
+  </p>
+
+  <div class="demo-section">
+    <h2>🎛️ Theme Selector</h2>
+    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+      <label for="theme-select" style="font-weight: bold;">Choose Theme:</label>
+      <select id="theme-select" style="min-width: 150px;">
+        {themes.map((theme) => (
+          <option value={theme}>
+            {theme.charAt(0).toUpperCase() + theme.slice(1)}
+          </option>
+        ))}
+      </select>
+      <button id="random-theme" type="button">🎲 Random Theme</button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🌈 Theme Preview</h2>
+    <p>Each theme changes the color scheme of the entire page. Notice how:</p>
+    <ul>
+      <li><strong>Background colors</strong> adapt to the theme</li>
+      <li><strong>Text colors</strong> maintain readability</li>
+      <li><strong>Accent colors</strong> match the theme's personality</li>
+      <li><strong>Border colors</strong> harmonize with the overall design</li>
+    </ul>
+  </div>
+
+  <div class="demo-section">
+    <h2>📊 Real-time Theme Information</h2>
+    <div class="theme-info">
+      <div class="theme-info-item">
+        <span class="theme-info-label">Active Theme:</span>
+        <code id="active-theme">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Available Themes:</span>
+        <code id="available-themes">{themes.join(", ")}</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">System Preference:</span>
+        <code id="system-preference">Loading...</code>
+      </div>
+      <div class="theme-info-item">
+        <span class="theme-info-label">Resolved Theme:</span>
+        <code id="resolved-theme">Loading...</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🔄 Cross-Tab Synchronization Test</h2>
+    <p>
+      <a href="/selector" target="_blank" style="color: var(--accent-color);">
+        → Open this page in a new tab
+      </a>
+    </p>
+    <p>
+      Change the theme in one tab and watch it update in all other tabs instantly. 
+      This demonstrates the real-time synchronization feature.
+    </p>
+  </div>
+
+  <div class="demo-section">
+    <h2>💡 Implementation Notes</h2>
+    <p>The theme selector is implemented using:</p>
+    <ul>
+      <li><strong>Reactive stores:</strong> <code>$theme</code>, <code>$resolvedTheme</code>, <code>$systemTheme</code></li>
+      <li><strong>Theme setter:</strong> <code>setTheme(themeName)</code></li>
+      <li><strong>Event listeners:</strong> Real-time UI updates via store subscriptions</li>
+      <li><strong>LocalStorage:</strong> Automatic persistence across sessions</li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<script>
+  import type { ThemeName } from "@madooei/omni-themes";
+  import { themes, $theme, $resolvedTheme, $systemTheme, setTheme } from "../lib/theme-store";
+
+  // Get DOM elements
+  const themeSelect = document.getElementById("theme-select") as HTMLSelectElement;
+  const randomThemeBtn = document.getElementById("random-theme") as HTMLButtonElement;
+  const activeThemeEl = document.getElementById("active-theme");
+  const systemPreferenceEl = document.getElementById("system-preference");
+  const resolvedThemeEl = document.getElementById("resolved-theme");
+
+  // Update UI elements
+  function updateUI() {
+    if (themeSelect) {
+      themeSelect.value = $theme.get();
+    }
+    if (activeThemeEl) {
+      activeThemeEl.textContent = $theme.get();
+    }
+    if (systemPreferenceEl) {
+      systemPreferenceEl.textContent = $systemTheme.get() || "unknown";
+    }
+    if (resolvedThemeEl) {
+      resolvedThemeEl.textContent = $resolvedTheme.get();
+    }
+  }
+
+  // Handle theme selection
+  if (themeSelect) {
+    themeSelect.addEventListener("change", (e) => {
+      const target = e.target as HTMLSelectElement;
+      if (target && target.value) {
+        setTheme(target.value as ThemeName);
+      }
+    });
+  }
+
+  // Handle random theme button
+  if (randomThemeBtn) {
+    randomThemeBtn.addEventListener("click", () => {
+      const availableThemes = themes.filter(t => t !== $theme.get());
+      const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+      if (randomTheme) {
+        setTheme(randomTheme as ThemeName);
+      }
+    });
+  }
+
+  // Listen for theme changes
+  $theme.listen(updateUI);
+  $systemTheme.listen(updateUI);
+  $resolvedTheme.listen(updateUI);
+
+  // Initial UI update
+  updateUI();
+
+  // Add some visual feedback for theme changes
+  $resolvedTheme.listen((newTheme) => {
+    // Create a brief visual indicator when theme changes
+    const indicator = document.createElement("div");
+    indicator.textContent = `Theme changed to: ${newTheme}`;
+    indicator.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      z-index: 1000;
+      animation: fadeInOut 2s ease-in-out;
+    `;
+    
+    // Add animation styles
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-10px); }
+        20% { opacity: 1; transform: translateY(0); }
+        80% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-10px); }
+      }
+    `;
+    
+    if (!document.querySelector('[data-theme-animation]')) {
+      style.setAttribute('data-theme-animation', '');
+      document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(indicator);
+    
+    setTimeout(() => {
+      if (indicator.parentNode) {
+        indicator.parentNode.removeChild(indicator);
+      }
+    }, 2000);
+  });
+</script>

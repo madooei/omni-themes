@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { applyThemeScriptString } from "../lib/theme-store";
+---
+
+<BaseLayout title="Omni-Themes Astro Demo">
+  <script set:html={applyThemeScriptString} is:inline slot="head" />
+  
+  <h1>🎨 Omni-Themes Astro Demo</h1>
+  
+  <p>
+    Welcome to the Omni-Themes demo! This showcases a universal theme library that works
+    across any JavaScript framework.
+  </p>
+
+  <div class="demo-section">
+    <h2>✨ Features Demonstrated</h2>
+    <ul>
+      <li><strong>System Theme Detection:</strong> Automatically respects your OS dark/light mode preference</li>
+      <li><strong>Multiple Themes:</strong> Support for custom color themes beyond just light/dark</li>
+      <li><strong>Cross-Tab Sync:</strong> Theme changes sync across all open tabs</li>
+      <li><strong>No Flash Loading:</strong> Themes apply instantly with no FOUC</li>
+      <li><strong>Forced Themes:</strong> Ability to lock specific pages to certain themes</li>
+      <li><strong>localStorage Persistence:</strong> Your theme choice is remembered across sessions</li>
+    </ul>
+  </div>
+
+  <div class="demo-section">
+    <h2>🧪 Try the Examples</h2>
+    <div class="example-grid">
+      <div class="theme-info-item">
+        <a href="/basic" class="example-link">
+          <h3>Basic Theme Demo</h3>
+          <p>Simple light/dark theme switching with system detection.</p>
+        </a>
+      </div>
+      
+      <div class="theme-info-item">
+        <a href="/selector" class="example-link">
+          <h3>Theme Selector</h3>
+          <p>Interactive UI to switch between multiple themes with real-time preview.</p>
+        </a>
+      </div>
+      
+      <div class="theme-info-item">
+        <a href="/forced" class="example-link">
+          <h3>Forced Theme</h3>
+          <p>Page locked to a specific theme regardless of user preferences.</p>
+        </a>
+      </div>
+      
+      <div class="theme-info-item">
+        <a href="/multi-theme" class="example-link">
+          <h3>Multi-Theme Showcase</h3>
+          <p>Advanced example with multiple custom color themes.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>🛠️ How to Test</h2>
+    <ol>
+      <li>Try changing your system's dark/light mode while on these pages</li>
+      <li>Open multiple tabs and change themes - watch them sync!</li>
+      <li>Check your browser's localStorage to see theme persistence</li>
+      <li>Refresh pages to see no-flash loading in action</li>
+    </ol>
+  </div>
+
+  <div class="demo-section">
+    <h2>📦 Installation</h2>
+    <pre class="code-block"><code>npm install @madooei/omni-themes</code></pre>
+  </div>
+</BaseLayout>
