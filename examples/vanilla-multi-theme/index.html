@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omni-Themes Vanilla JS Demo</title>
+    
+    <!-- Theme script will be injected here by JavaScript -->
+    <script id="theme-script"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <div>
+            <h1 style="margin: 0; font-size: 1.5rem;">🎨 Omni-Themes</h1>
+            <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">Vanilla JS Demo</p>
+          </div>
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#themes">Themes</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#api">API</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section">
+          <h1>Universal Theme Library for Vanilla JavaScript</h1>
+          <p>
+            Welcome to the Omni-Themes vanilla JavaScript demo! This demonstrates how to use our 
+            universal theme library in any JavaScript application without framework dependencies.
+          </p>
+
+          <div class="grid">
+            <div class="card">
+              <h3>🌟 Framework Agnostic</h3>
+              <p>Works in vanilla JavaScript, React, Vue, Svelte, Astro, and any other JavaScript environment.</p>
+            </div>
+            <div class="card">
+              <h3>🎨 Multiple Themes</h3>
+              <p>Support for custom color themes beyond just light/dark mode.</p>
+            </div>
+            <div class="card">
+              <h3>⚡ No Flash Loading</h3>
+              <p>Themes apply instantly with no FOUC (Flash of Unstyled Content).</p>
+            </div>
+            <div class="card">
+              <h3>🔄 Cross-Tab Sync</h3>
+              <p>Theme changes sync across all open tabs automatically.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Theme Selector Section -->
+        <section id="themes" class="section">
+          <h2>🎛️ Interactive Theme Selector</h2>
+          <p>Try switching between different themes and see the changes applied instantly!</p>
+
+          <div class="card">
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+              <label for="theme-selector" style="font-weight: 600;">Choose Theme:</label>
+              <select id="theme-selector" style="min-width: 150px;">
+                <!-- Options will be populated by JavaScript -->
+              </select>
+              <button id="random-theme" class="btn btn-primary">🎲 Random Theme</button>
+              <button id="cycle-themes" class="btn">🔄 Auto Cycle</button>
+            </div>
+
+            <div class="theme-demo-box">
+              <div class="color-swatch color-bg-primary">Primary BG</div>
+              <div class="color-swatch color-bg-secondary">Secondary BG</div>
+              <div class="color-swatch color-accent">Accent Color</div>
+            </div>
+          </div>
+
+          <div class="grid grid-small">
+            <div class="card">
+              <h4>Current Theme</h4>
+              <code id="current-theme">Loading...</code>
+            </div>
+            <div class="card">
+              <h4>System Preference</h4>
+              <code id="system-theme">Loading...</code>
+            </div>
+            <div class="card">
+              <h4>Resolved Theme</h4>
+              <code id="resolved-theme">Loading...</code>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section">
+          <h2>✨ Key Features</h2>
+
+          <div class="grid">
+            <div class="card">
+              <h3>🌓 System Theme Detection</h3>
+              <p>Automatically detects and follows your operating system's dark/light mode preference using the <code>prefers-color-scheme</code> media query.</p>
+              <div class="status-indicator status-success" id="system-status">
+                <span>✓ System detection active</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>💾 Persistent Storage</h3>
+              <p>Your theme choice is automatically saved to localStorage and restored across browser sessions.</p>
+              <div style="margin-top: 1rem;">
+                <button id="clear-storage" class="btn btn-small">Clear Storage</button>
+                <span id="storage-status" class="status-indicator status-success" style="margin-left: 0.5rem;">
+                  <span>✓ Storage active</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>🔄 Cross-Tab Synchronization</h3>
+              <p>Theme changes are synchronized across all open tabs in real-time using storage events.</p>
+              <button id="open-new-tab" class="btn">Open New Tab</button>
+            </div>
+
+            <div class="card">
+              <h3>🎨 CSS Custom Properties</h3>
+              <p>Uses modern CSS custom properties (CSS variables) for efficient and smooth theme transitions.</p>
+              <div id="css-vars" style="font-size: 0.8rem; margin-top: 0.5rem;">
+                <!-- CSS variables will be displayed here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- API Documentation Section -->
+        <section id="api" class="section">
+          <h2>🛠️ API Reference</h2>
+
+          <div class="card">
+            <h3>Installation</h3>
+            <pre><code>npm install @madooei/omni-themes</code></pre>
+          </div>
+
+          <div class="card">
+            <h3>Basic Usage</h3>
+            <pre><code>import { createThemeStore } from '@madooei/omni-themes';
+
+// Create theme store
+const {
+  themes,           // Available themes array
+  $theme,           // Current theme atom
+  $resolvedTheme,   // Resolved theme atom (handles 'system')
+  $systemTheme,     // System preference atom
+  setTheme,         // Function to change theme
+  applyThemeScriptString  // Script for FOUC prevention
+} = createThemeStore({
+  themes: ['light', 'dark', 'blue', 'green'],
+  enableSystem: true,
+  enableColorScheme: true
+});
+
+// Listen for theme changes
+$theme.listen((theme) => {
+  console.log('Theme changed to:', theme);
+});
+
+// Change theme
+setTheme('dark');</code></pre>
+          </div>
+
+          <div class="card">
+            <h3>FOUC Prevention</h3>
+            <pre><code>// Inject theme script in HTML head to prevent flash
+const themeScript = document.createElement('script');
+themeScript.innerHTML = applyThemeScriptString;
+document.head.appendChild(themeScript);</code></pre>
+          </div>
+
+          <div class="grid grid-small">
+            <div class="card">
+              <h4>Available Themes</h4>
+              <div id="available-themes">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+            <div class="card">
+              <h4>Store State</h4>
+              <div id="store-state" style="font-size: 0.875rem;">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 2rem 0; border-top: 1px solid var(--border-color); margin-top: 3rem;">
+          <p style="color: var(--text-muted);">
+            Built with ❤️ using <strong>@madooei/omni-themes</strong> • 
+            <a href="https://github.com/madooei/omni-themes" target="_blank">View on GitHub</a>
+          </p>
+        </footer>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
