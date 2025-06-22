@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "path": "docs"
+    },
+    {
+      "path": "packages/omni-themes"
+    },
+    {
+      "path": "examples/vanilla-basic"
+    },
+    {
+      "path": "examples/astro-basic"
+    },
+    {
+      "path": "examples/react-basic"
+    },
+    {
+      "path": "examples/vanilla-multi-theme"
+    },
+    {
+      "path": "examples/astro-multi-theme"
+    },
+    {
+      "path": "examples/react-multi-theme"
+    },
+    {
+      "path": "examples/shadcn"
+    }
+  ],
+  "settings": {
+    "workbench.preferredDarkColorTheme": "Default Dark+",
+    "workbench.preferredLightColorTheme": "Default Light+",
+    "workbench.colorTheme": "Default Dark+",
+    "window.autoDetectColorScheme": true,
+    "window.zoomLevel": 1,
+    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.lineHeight": 1.8,
+    "terminal.integrated.fontFamily": "MonoLisa",
+    "git.openRepositoryInParentFolders": "always"
+  }
+}
