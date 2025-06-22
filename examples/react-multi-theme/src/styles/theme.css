@@ -1,0 +1,147 @@
+/* CSS Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* CSS Custom Properties for Theming */
+:root {
+  /* Light theme (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #1d4ed8;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(15, 23, 42, 0.1);
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-primary: #60a5fa;
+  --accent-secondary: #3b82f6;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --error-color: #f87171;
+}
+
+/* Blue theme */
+[data-theme="blue"] {
+  --bg-primary: #dbeafe;
+  --bg-secondary: #bfdbfe;
+  --bg-tertiary: #93c5fd;
+  --text-primary: #1e40af;
+  --text-secondary: #1d4ed8;
+  --text-muted: #3730a3;
+  --accent-primary: #2563eb;
+  --accent-secondary: #1d4ed8;
+  --border-color: #93c5fd;
+  --shadow-color: rgba(30, 64, 175, 0.2);
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --error-color: #dc2626;
+}
+
+/* Green theme */
+[data-theme="green"] {
+  --bg-primary: #dcfce7;
+  --bg-secondary: #bbf7d0;
+  --bg-tertiary: #86efac;
+  --text-primary: #166534;
+  --text-secondary: #15803d;
+  --text-muted: #16a34a;
+  --accent-primary: #22c55e;
+  --accent-secondary: #16a34a;
+  --border-color: #86efac;
+  --shadow-color: rgba(22, 101, 52, 0.2);
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+/* Purple theme */
+[data-theme="purple"] {
+  --bg-primary: #f3e8ff;
+  --bg-secondary: #e9d5ff;
+  --bg-tertiary: #c4b5fd;
+  --text-primary: #7c3aed;
+  --text-secondary: #8b5cf6;
+  --text-muted: #a855f7;
+  --accent-primary: #8b5cf6;
+  --accent-secondary: #7c3aed;
+  --border-color: #c4b5fd;
+  --shadow-color: rgba(124, 58, 237, 0.2);
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+/* Ocean theme */
+[data-theme="ocean"] {
+  --bg-primary: #ecfeff;
+  --bg-secondary: #cffafe;
+  --bg-tertiary: #a5f3fc;
+  --text-primary: #155e75;
+  --text-secondary: #0891b2;
+  --text-muted: #0e7490;
+  --accent-primary: #06b6d4;
+  --accent-secondary: #0891b2;
+  --border-color: #a5f3fc;
+  --shadow-color: rgba(21, 94, 117, 0.2);
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+/* Base Styles */
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--accent-primary);
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+code {
+  background-color: var(--bg-tertiary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
