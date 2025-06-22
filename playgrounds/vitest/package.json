@@ -1,0 +1,25 @@
+{
+  "name": "vitest-playground",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A playground to experiment with vitest",
+  "scripts": {
+    "dev": "tsx --no-warnings --watch ./src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.0.0",
+    "@vitest/coverage-v8": "^3.1.2",
+    "@vitest/ui": "^3.1.2",
+    "vitest": "^3.1.2"
+  }
+}
