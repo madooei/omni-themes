@@ -21,6 +21,9 @@
     "README.md",
     "CHANGELOG.md"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "themes",
     "dark-mode",
@@ -37,7 +40,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/madooei/omni-themes.git"
+    "url": "git+https://github.com/madooei/omni-themes.git"
   },
   "homepage": "https://madooei.github.io/omni-themes/",
   "bugs": {
