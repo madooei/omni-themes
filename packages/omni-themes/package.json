@@ -1,6 +1,6 @@
 {
   "name": "@madooei/omni-themes",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Universal theme library that works with any JavaScript framework. Provides perfect dark mode, system theme detection, and no-flash loading.",
   "type": "module",
   "main": "./dist/index.cjs",
