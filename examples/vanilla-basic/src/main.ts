@@ -4,10 +4,7 @@ import {
   $resolvedTheme,
   $systemTheme,
   setTheme,
-  applyThemeScriptString,
-} from "./theme";
-
-document.head.insertAdjacentHTML("beforeend", `<script>${applyThemeScriptString}</script>`);
+} from "./theme-store";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
