@@ -29,9 +29,7 @@ The Omni-Themes Workspace provides a universal theme library that works across a
 
 ### Next Steps
 
-- **Animation Enhancements**: Better transition control and theme change animations
-- **Theme Validation**: Runtime theme configuration validation and error handling
-- **Custom Theme Scripts**: Advanced theme script customization options
+- **Add `isLight` and `isDark` variables**: Some components need to know if the current theme is a light or dark theme. Typically, we theme resolves to "dark" or "light". However, in omni-theme we allow the client to define multiple themes and name them whatever they want. So having `isLight` and `isDark` will be helpful.
 
 ## Project Evolution
 
@@ -164,4 +162,4 @@ The Omni-Themes project welcomes contributions in these areas:
 - **Feature Development**: Implementation of roadmap items
 - **Bug Reports**: Framework-specific issues and edge cases
 
-The project maintains focus on universal compatibility and performance, ensuring that new features enhance rather than complicate the core theme management functionality.
+##### The project maintains focus on universal compatibility and performance, ensuring that new features enhance rather than complicate the core theme management functionality.
