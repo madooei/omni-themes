@@ -3,7 +3,7 @@ import type { ThemeName, ThemeStoreConfig } from "./types";
 /**
  * Creates a script string to apply the theme based on the provided configuration.
  * This script is designed to be injected into the <head> of the document to solve
- * the "flash of incorrect theme" (FOIT) issue.
+ * the "Flash of Unstyled Content" (FOUC) issue.
  *
  * @param config - The theme store configuration object.
  * @returns A script string that can be injected into the HTML.
