@@ -26,7 +26,10 @@
     },
     {
       "path": "examples/shadcn"
-    }
+    },
+    {
+      "path": "examples/fouc-demo"
+    },
   ],
   "settings": {
     "workbench.preferredDarkColorTheme": "Default Dark+",
