@@ -1,11 +1,9 @@
-import { ThemeProvider } from './components/ThemeProvider';
 import { ThemeSelector } from './components/ThemeSelector';
 import { ThemeDemo } from './components/ThemeDemo';
 import { ThemeControls } from './components/ThemeControls';
 
 function App() {
   return (
-    <ThemeProvider>
       <div className="app">
         {/* Header */}
         <header className="header">
@@ -117,14 +115,6 @@ function App() {
                 <pre><code>{`import { ThemeProvider } from './components/ThemeProvider';
 import { useTheme } from './hooks/useTheme';
 
-function App() {
-  return (
-    <ThemeProvider>
-      <YourComponents />
-    </ThemeProvider>
-  );
-}
-
 function YourComponent() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   
@@ -151,9 +141,16 @@ export const {
   setTheme,
   applyThemeScriptString
 } = createThemeStore({
-  themes: ['system', 'light', 'dark', 'blue', 'green'],
+  themes: ['light', 'dark', 'day', 'night'],
   enableSystem: true,
   enableColorScheme: true,
+  defaultTheme: "system",
+  defaultLightTheme: "light",
+  defaultDarkTheme: "dark",
+  themesMap: {
+    light: ["light", "day"],
+    dark: ["dark", "night"],
+  },
   dataAttributes: ['data-theme'],
   storageKey: 'my-app-theme'
 });`}</code></pre>
@@ -177,7 +174,6 @@ export const {
           </div>
         </main>
       </div>
-    </ThemeProvider>
   );
 }
 

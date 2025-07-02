@@ -1,21 +1,29 @@
-import { createThemeStore } from '@madooei/omni-themes';
-import type { ThemeName } from '@madooei/omni-themes';
+import { createThemeStore } from "@madooei/omni-themes";
 
-// Create the theme store with React demo configuration
+// Create a theme store with multiple themes for vanilla JS demo
 export const {
   themes,
   $theme,
   $resolvedTheme,
   $systemTheme,
   setTheme,
-  applyThemeScriptString,
-  createForcedThemeScriptString
+  applyThemeScriptString
 } = createThemeStore({
-  themes: ['system', 'light', 'dark', 'blue', 'green', 'purple', 'ocean'],
+  themes: ["light", "dark", "blue", "green", "purple", "ocean"],
+  defaultTheme: "light",
+  defaultLightTheme: "light",
+  defaultDarkTheme: "dark",
+  themesMap: {
+    light: ["light", "blue", "green", "purple", "ocean"],
+    dark: ["dark"],
+  },
+  themeStorageKey: "omni-theme-react-demo",
   enableSystem: true,
   enableColorScheme: true,
-  dataAttributes: ['data-theme'],
-  debug: false
+  updateClassAttribute: true,
+  dataAttributes: ["data-theme"],
+  debug: false,
 });
 
-export type { ThemeName };
+// Export types for TypeScript usage
+export type { ThemeName } from "@madooei/omni-themes";

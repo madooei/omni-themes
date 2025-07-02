@@ -1,21 +1,33 @@
-import { useEffect, useState } from 'react';
-import { $theme, $resolvedTheme, $systemTheme, setTheme, themes } from '../lib/theme-store';
-import type { ThemeName } from '../lib/theme-store';
+import { useEffect, useState } from "react";
+import {
+  $theme,
+  $resolvedTheme,
+  $systemTheme,
+  setTheme,
+  themes,
+  type ThemeName,
+} from "../lib/theme-store";
 
 /**
  * React hook for managing theme state with omni-themes
- * 
+ *
  * @returns Object containing theme state and control functions
  */
 export function useTheme() {
   const [theme, setThemeState] = useState<ThemeName>($theme.get());
-  const [resolvedTheme, setResolvedThemeState] = useState<ThemeName>($resolvedTheme.get());
-  const [systemTheme, setSystemThemeState] = useState<string | null>($systemTheme.get() || null);
+  const [resolvedTheme, setResolvedThemeState] = useState<ThemeName>(
+    $resolvedTheme.get()
+  );
+  const [systemTheme, setSystemThemeState] = useState<string | null>(
+    $systemTheme.get() || null
+  );
 
   useEffect(() => {
     // Subscribe to theme changes
     const unsubscribeTheme = $theme.listen(setThemeState);
-    const unsubscribeResolvedTheme = $resolvedTheme.listen(setResolvedThemeState);
+    const unsubscribeResolvedTheme = $resolvedTheme.listen(
+      setResolvedThemeState
+    );
     const unsubscribeSystemTheme = $systemTheme.listen((value) => {
       setSystemThemeState(value || null);
     });
