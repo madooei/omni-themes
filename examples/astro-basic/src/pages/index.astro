@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/base.astro";
+
+import {
+  $theme,
+  $resolvedTheme,
+  $systemTheme,
+} from "../lib/theme-store";
+---
+
+<BaseLayout>
+	<h1>Omni Themes</h1>
+  <p id="current-theme">Current theme: {$theme.get()}</p>
+  <p id="resolved-theme">Resolved theme: {$resolvedTheme.get()}</p>
+  <p id="system-theme">System theme: {$systemTheme.get()}</p>
+	<button id="set-theme-light">Set Light Theme</button>
+	<button id="set-theme-dark">Set Dark Theme</button>
+	<button id="set-theme-system">Set System Theme</button>
+</BaseLayout>
+
+<script>
+import {
+  $theme,
+  $resolvedTheme,
+  $systemTheme,
+	setTheme
+} from "../lib/theme-store";
+
+$theme.listen((value: string) => {
+  document.querySelector<HTMLParagraphElement>(
+    "#current-theme"
+  )!.textContent = `Current theme: ${value}`;
+});
+
+$resolvedTheme.listen((value: string) => {
+  document.querySelector<HTMLParagraphElement>(
+    "#resolved-theme"
+  )!.textContent = `Resolved theme: ${value}`;
+});
+
+$systemTheme.listen((value: string) => {
+  document.querySelector<HTMLParagraphElement>(
+    "#system-theme"
+  )!.textContent = `System theme: ${value}`;
+});
+
+function handleLightThemeClick() {
+  setTheme("light");
+}
+
+function handleDarkThemeClick() {
+  setTheme("dark");
+}
+
+function handleSystemThemeClick() {
+  setTheme("system");
+}
+
+document
+  .querySelector<HTMLButtonElement>("#set-theme-light")!
+  .addEventListener("click", handleLightThemeClick);
+
+document
+  .querySelector<HTMLButtonElement>("#set-theme-dark")!
+  .addEventListener("click", handleDarkThemeClick);
+
+document
+  .querySelector<HTMLButtonElement>("#set-theme-system")!
+  .addEventListener("click", handleSystemThemeClick);
+</script>
