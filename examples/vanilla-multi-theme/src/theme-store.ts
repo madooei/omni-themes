@@ -7,8 +7,7 @@ export const {
   $resolvedTheme,
   $systemTheme,
   setTheme,
-  applyThemeScriptString,
-  createForcedThemeScriptString,
+  applyThemeScriptString
 } = createThemeStore({
   themes: ["light", "dark", "blue", "green", "purple", "ocean"],
   defaultTheme: "light",

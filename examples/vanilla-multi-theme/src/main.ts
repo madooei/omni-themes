@@ -1,27 +1,15 @@
 import './style.css';
-import { 
+import {
   themes, 
   $theme, 
   $resolvedTheme, 
   $systemTheme, 
-  setTheme, 
-  applyThemeScriptString 
+  setTheme
 } from './theme-store';
 import type { ThemeName } from './theme-store';
 
-// Apply theme script for FOUC prevention
-function injectThemeScript() {
-  const existingScript = document.getElementById('theme-script');
-  if (existingScript) {
-    existingScript.innerHTML = applyThemeScriptString;
-  }
-}
-
 // Initialize theme system
 function initializeThemeSystem() {
-  // Inject the theme script immediately
-  injectThemeScript();
-  
   console.log('🎨 Omni-Themes initialized with themes:', themes);
   console.log('📊 Current theme state:', {
     theme: $theme.get(),

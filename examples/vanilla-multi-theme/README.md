@@ -14,7 +14,7 @@ This example demonstrates how to integrate the `@madooei/omni-themes` package wi
 
 ## 📁 Project Structure
 
-```
+```plaintext
 src/
 ├── main.ts                   # Main application logic and UI setup
 ├── theme-store.ts            # Theme store configuration
@@ -72,14 +72,11 @@ export const {
 
 ### FOUC Prevention
 
+The Vite plugin automatically injects the theme script into the HTML head during build time, preventing any flash of unstyled content (FOUC). No manual script injection is required.
+
 ```javascript
-// Inject theme script for immediate theme application
-function injectThemeScript() {
-  const existingScript = document.getElementById('theme-script');
-  if (existingScript) {
-    existingScript.innerHTML = applyThemeScriptString;
-  }
-}
+// The theme script is automatically injected by the Vite plugin
+// No additional code needed for FOUC prevention
 ```
 
 ### Theme Selector Implementation

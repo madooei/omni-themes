@@ -2,12 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Omni-Themes Vanilla JS Demo</title>
+    <title>Omni Themes - Vanilla - Multi Theme Example</title>
     
-    <!-- Theme script will be injected here by JavaScript -->
-    <script id="theme-script"></script>
+
   </head>
   <body>
     <header class="header">
@@ -173,10 +171,9 @@ setTheme('dark');</code></pre>
 
           <div class="card">
             <h3>FOUC Prevention</h3>
-            <pre><code>// Inject theme script in HTML head to prevent flash
-const themeScript = document.createElement('script');
-themeScript.innerHTML = applyThemeScriptString;
-document.head.appendChild(themeScript);</code></pre>
+            <pre><code>// Vite plugin automatically injects theme script
+// No manual injection required - see vite.config.ts
+// The plugin uses applyThemeScriptString from theme store</code></pre>
           </div>
 
           <div class="grid grid-small">
