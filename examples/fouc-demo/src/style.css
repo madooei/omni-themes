@@ -1,0 +1,114 @@
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Default styles (this is what causes FOUC) */
+:root {
+  background: #ff0066 !important;
+  color: #00ff00 !important;
+}
+
+/* Theme styles */
+.light {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.dark {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* UI Components */
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid currentColor;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.controls {
+  border: 2px solid currentColor;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.status {
+  font-weight: bold;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid currentColor;
+}
+
+.fouc-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1000;
+  background: #ff0066;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+}
+
+.fouc-indicator.fouc-prevented {
+  background: #00ff00;
+  color: #000000;
+  border-color: #000000;
+}
+
+/* Theme info styling */
+#theme-info {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+}
+
+#theme-info p {
+  margin: 8px 0;
+}
+
+/* Instructions styling */
+.instructions {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  margin-top: 30px;
+}
+
+.instructions ol {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin: 10px 0;
+  line-height: 1.5;
+}

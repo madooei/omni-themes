@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOUC Demo - Flash of Unstyled Content</title>
+  </head>
+  <body>
+    <!-- FOUC Indicator -->
+    <div id="fouc-indicator" class="fouc-indicator">
+      FOUC: ENABLED
+    </div>
+
+    <h1>FOUC (Flash of Unstyled Content) Demo</h1>
+    <p>This demo shows the difference between having FOUC prevention enabled vs disabled.</p>
+
+    <div class="controls">
+      <h2>Theme Controls</h2>
+      <button id="set-theme-light">Light Theme</button>
+      <button id="set-theme-dark">Dark Theme</button>
+      <button id="set-theme-system">System Theme</button>
+    </div>
+
+    <div class="controls">
+      <h2>FOUC Testing</h2>
+      <button id="toggle-fouc">Toggle FOUC Prevention</button>
+      <button id="reload-page">Reload Page (See FOUC Effect)</button>
+      <button id="clear-storage">Clear Theme Storage</button>
+    </div>
+
+    <div class="status" id="status">
+      Status: Page loaded. Watch for the pink/green flash when FOUC prevention is disabled.
+    </div>
+
+    <div id="theme-info">
+      <p><strong>Current Theme:</strong> <span id="current-theme">none</span></p>
+      <p><strong>System Preference:</strong> <span id="system-theme">unknown</span></p>
+      <p><strong>Resolved Theme:</strong> <span id="resolved-theme">none</span></p>
+      <p><strong>FOUC Prevention:</strong> <span id="fouc-status">enabled</span></p>
+    </div>
+
+    <div class="instructions">
+      <h3>How to Test FOUC:</h3>
+      <ol>
+        <li>
+          <strong>With FOUC Prevention (Default):</strong> The page loads with the correct theme immediately - no flash
+        </li>
+        <li>
+          <strong>Without FOUC Prevention:</strong> Click "Toggle FOUC Prevention" then "Reload Page" - you'll see a bright pink/green flash before the correct theme loads
+        </li>
+        <li>
+          <strong>Test Theme Switching:</strong> Use the theme buttons to see instant changes without page reload
+        </li>
+        <li>
+          <strong>Test Persistence:</strong> Set a theme, reload the page, and see if it persists correctly
+        </li>
+      </ol>
+      
+      <h4>What's Happening:</h4>
+      <ul>
+        <li><strong>Default styles (pink/green):</strong> These are the fallback styles that show before JavaScript loads</li>
+        <li><strong>FOUC Prevention:</strong> Injects a script in the &lt;head&gt; that applies the correct theme before the page renders</li>
+        <li><strong>Without Prevention:</strong> The page shows default styles until JavaScript loads and applies the theme</li>
+      </ul>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
