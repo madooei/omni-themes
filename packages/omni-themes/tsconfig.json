@@ -13,9 +13,8 @@
     "types": ["node", "vitest/globals"],
     "rootDir": ".",
     "outDir": "./dist",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*", "tests/**/*"],
